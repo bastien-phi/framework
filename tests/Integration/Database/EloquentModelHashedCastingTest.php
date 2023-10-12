@@ -30,9 +30,9 @@ class EloquentModelHashedCastingTest extends DatabaseTestCase
 
     public function testHashed()
     {
-        $this->hasher->expects('isHashed')
+        $this->hasher->expects('needsRehash')
             ->with('this is a password')
-            ->andReturnFalse();
+            ->andReturnTrue();
 
         $this->hasher->expects('make')
             ->with('this is a password')
@@ -51,9 +51,9 @@ class EloquentModelHashedCastingTest extends DatabaseTestCase
 
     public function testNotHashedIfAlreadyHashed()
     {
-        $this->hasher->expects('isHashed')
+        $this->hasher->expects('needsRehash')
             ->with('already-hashed-password')
-            ->andReturnTrue();
+            ->andReturnFalse();
 
         $subject = HashedCast::create([
             'password' => 'already-hashed-password',

@@ -1316,7 +1316,7 @@ trait HasAttributes
      */
     protected function castAttributeAsHashedString($key, $value)
     {
-        return $value !== null && ! Hash::isHashed($value) ? Hash::make($value) : $value;
+        return $value !== null && Hash::needsRehash($value) ? Hash::make($value) : $value;
     }
 
     /**
