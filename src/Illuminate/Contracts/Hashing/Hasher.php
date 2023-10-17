@@ -39,4 +39,12 @@ interface Hasher
      * @return bool
      */
     public function needsRehash($hashedValue, array $options = []);
+
+    /**
+     * Check if the given hash is acceptable for the hasher.
+     *
+     * @param  string  $hashedValue
+     * @return bool
+     */
+    public function isAcceptable($hashedValue);
 }

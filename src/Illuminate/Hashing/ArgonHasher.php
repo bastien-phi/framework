@@ -145,6 +145,21 @@ class ArgonHasher extends AbstractHasher implements HasherContract
     }
 
     /**
+     * Check if the given hash is acceptable for the hasher.
+     *
+     * @param  string  $hashedValue
+     * @return bool
+     */
+    public function isAcceptable($hashedValue)
+    {
+        $info = $this->info($hashedValue);
+
+        return $info['algoName'] === $this->algorithm()
+            && $info['options']['memory_cost'] / $info['options']['threads'] <= 4 * 65536
+            && $info['options']['threads'] <= 16;
+    }
+
+    /**
      * Set the default password threads factor.
      *
      * @param  int  $threads

@@ -56,6 +56,10 @@ class HasherTest extends TestCase
         $this->assertSame('bcrypt', password_get_info($value)['algoName']);
         $this->assertGreaterThanOrEqual(12, password_get_info($value)['options']['cost']);
         $this->assertTrue($this->hashManager->isHashed($value));
+        $this->assertTrue($hasher->isAcceptable($value));
+        $this->assertFalse($hasher->isAcceptable('password'));
+        $this->assertFalse($hasher->isAcceptable('$2y$17$1iPpw8cxiw6.ijzD2Ry1mOvBMM2kPu6wayaIXWLMG5fhFX5ejCEa6'));
+        $this->assertFalse($hasher->isAcceptable('$argon2i$v=19$m=65536,t=4,p=1$eE4vbkhJTm54M0k4OU1LTw$C9JCrLeNkNHI1jWx3pBqpK2bTgFrtcVcIfARjCN0218'));
     }
 
     public function testBasicArgon2iHashing()
@@ -68,6 +72,12 @@ class HasherTest extends TestCase
         $this->assertTrue($hasher->needsRehash($value, ['threads' => 1]));
         $this->assertSame('argon2i', password_get_info($value)['algoName']);
         $this->assertTrue($this->hashManager->isHashed($value));
+        $this->assertTrue($hasher->isAcceptable($value));
+        $this->assertTrue($hasher->isAcceptable('$argon2i$v=19$m=4194304,t=4,p=16$c01ieWxxZWozSmtHTzd5Vw$y9hJhd9Ip28ZFbh4BEVpPYSA6n017UIBdPcuTVna4hw'));
+        $this->assertFalse($hasher->isAcceptable('password'));
+        $this->assertFalse($hasher->isAcceptable('$argon2i$v=19$m=4194304,t=4,p=8$Ri5lRGt5VFMvMEtiLkYxQg$sPuFc8V0SKB1gmOJXmqcXscTZ8Awdkihf7m0Y/bskSg'));
+        $this->assertFalse($hasher->isAcceptable('$argon2i$v=19$m=8388608,t=4,p=32$Z0JUVVFTMTBVRnZlRHhldQ$sQrSwO1zcTFOseS56GZOd27SR9c05YUXPK7Np+gJpv4'));
+        $this->assertFalse($hasher->isAcceptable('$2y$10$PCXl4nmz2z8vckcBFi2AQObDvYOIlNa99REfp0dQN/Hq7Lc1wA5qC'));
     }
 
     public function testBasicArgon2idHashing()
@@ -80,6 +90,12 @@ class HasherTest extends TestCase
         $this->assertTrue($hasher->needsRehash($value, ['threads' => 1]));
         $this->assertSame('argon2id', password_get_info($value)['algoName']);
         $this->assertTrue($this->hashManager->isHashed($value));
+        $this->assertTrue($hasher->isAcceptable($value));
+        $this->assertTrue($hasher->isAcceptable('$argon2id$v=19$m=4194304,t=4,p=16$WmJySGpROWJuMUJxZXQ5Rw$u96pRIoI4xsj+OfFoluc+iEng3jkDfuTFDIJOYbRml0'));
+        $this->assertFalse($hasher->isAcceptable('password'));
+        $this->assertFalse($hasher->isAcceptable('$argon2id$v=19$m=4194304,t=4,p=8$VmZWVE5Uc2xDbklQVlhBWA$59KcqVqTfDt4WjoFIQkFIuXQEZBuRN7+G/YR7BDb9i8'));
+        $this->assertFalse($hasher->isAcceptable('$argon2id$v=19$m=8388608,t=4,p=32$dVFMcDB4WWkvRU41bGtDMQ$q4Y/26s5RVLn3tInzMgh/jUKeoOj/BXINARKQsvvhC4'));
+        $this->assertFalse($hasher->isAcceptable('$2y$10$PCXl4nmz2z8vckcBFi2AQObDvYOIlNa99REfp0dQN/Hq7Lc1wA5qC'));
     }
 
     /**

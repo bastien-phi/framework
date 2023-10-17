@@ -89,6 +89,19 @@ class BcryptHasher extends AbstractHasher implements HasherContract
     }
 
     /**
+     * Check if the given hash is acceptable for the hasher.
+     *
+     * @param  string  $hashedValue
+     * @return bool
+     */
+    public function isAcceptable($hashedValue)
+    {
+        $info = $this->info($hashedValue);
+
+        return $info['algoName'] === 'bcrypt' && $info['options']['cost'] <= 16;
+    }
+
+    /**
      * Set the default password work factor.
      *
      * @param  int  $rounds

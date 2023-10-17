@@ -89,6 +89,17 @@ class HashManager extends Manager implements Hasher
     }
 
     /**
+     * Check if the given hash is acceptable for the hasher.
+     *
+     * @param  string  $hashedValue
+     * @return bool
+     */
+    public function isAcceptable($hashedValue)
+    {
+        return $this->driver()->isAcceptable($hashedValue);
+    }
+
+    /**
      * Determine if a given string is already hashed.
      *
      * @param  string  $value

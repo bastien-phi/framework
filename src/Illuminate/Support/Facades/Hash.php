@@ -10,6 +10,7 @@ namespace Illuminate\Support\Facades;
  * @method static string make(string $value, array $options = [])
  * @method static bool check(string $value, string $hashedValue, array $options = [])
  * @method static bool needsRehash(string $hashedValue, array $options = [])
+ * @method static bool isAcceptable(string $hashedValue)
  * @method static bool isHashed(string $value)
  * @method static string getDefaultDriver()
  * @method static mixed driver(string|null $driver = null)
